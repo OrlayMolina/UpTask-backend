@@ -7,6 +7,8 @@ dotenv.config();
 
 conectarDB(); 
 
-app.listen(3000, () => {
-    console.log('Servidor corriendo en el puerto 3000');
+const port = process.env.PORT || 4000;
+
+app.listen(port, () => {
+    console.log(`Servidor correindo en el puerto: ${port}`);
 });
