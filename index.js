@@ -4,6 +4,7 @@ import conectarDB from "./config/db.js";
 import usuarioRoutes from './routes/usuarioRoutes.js'; //Carpeta actual ./
 
 const app = express();
+app.use(express.json());
 dotenv.config();
 
 conectarDB(); 
