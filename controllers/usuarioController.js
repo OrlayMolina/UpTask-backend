@@ -32,6 +32,27 @@ const registrar = async (req, res) => {
     }
 };
 
+const confirmar = async ( req, res ) => {
+    const { token } = req.params;
+    const usuarioConfirmar = await Usuario.findOne({token});
+    if(!usuarioConfirmar){
+        const error = new Error('Token no válido.');
+        return res.status(403).json({ msg: error.message });
+    }
+
+    try {
+        //Token de un solo uso
+        usuarioConfirmar.confirmado = true;
+        usuarioConfirmar.token = '';
+        await usuarioConfirmar.save();
+        res.json({msg: 'Usuario confirmado correctamente'});
+
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+
 const autenticar = async (req, res) => {
     const { email, password } = req.body;
     //Comprobar que existe
@@ -60,9 +81,10 @@ const autenticar = async (req, res) => {
         return res.status(403).json({ msg: error.message });
     }
 
-}
+};
 
 export {
     registrar,
-    autenticar
+    autenticar,
+    confirmar
 }
